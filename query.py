@@ -41,10 +41,10 @@ def query(input):
         QUERY_PROMPT, prompt = get_prompt()
 
         # Set up the retriever to generate multiple queries using the language model and the query prompt
-            # Increase k to fetch more documents, hopefully including older ones.
-            base_retriever = db.as_retriever(search_kwargs={'k': 10})
+        # Increase k to fetch more documents, hopefully including older ones.
+        base_retriever = db.as_retriever(search_kwargs={'k': 10})
         retriever = MultiQueryRetriever.from_llm(
-                base_retriever,
+            base_retriever,
             llm,
             prompt=QUERY_PROMPT
         )
