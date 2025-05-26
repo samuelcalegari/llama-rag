@@ -40,7 +40,6 @@ def embed(file):
         chunks = load_and_split_data(file_path)
         db = get_vector_db()
         db.add_documents(chunks)
-        db.persist()
         os.remove(file_path)
 
         return True

@@ -1,13 +1,7 @@
 import os
-import nltk
-
-nltk.download('punkt')
-nltk.download('averaged_perceptron_tagger')
-
 from dotenv import load_dotenv
 load_dotenv()
-
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from embed import embed
 from query import query
 from get_vector_db import get_vector_db
@@ -16,6 +10,11 @@ TEMP_FOLDER = os.getenv('TEMP_FOLDER', './_temp')
 os.makedirs(TEMP_FOLDER, exist_ok=True)
 
 app = Flask(__name__)
+
+@app.route('/')
+def route_home():
+    return render_template('chat.html')
+
 
 @app.route('/embed', methods=['POST'])
 def route_embed():
@@ -57,7 +56,7 @@ def route_list():
 
     return jsonify(list)
 
-@app.route('/delete/<id>', methods=['GET'])
+@app.route('/delete/<id>', methods=['DELETE'])
 def route_delete(id):
     db = get_vector_db()
     db.delete(id)
